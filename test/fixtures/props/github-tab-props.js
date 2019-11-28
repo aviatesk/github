@@ -12,9 +12,6 @@ export function gitHubTabItemProps(atomEnv, repository, overrides = {}) {
     workspace: atomEnv.workspace,
     repository,
     loginModel: new GithubLoginModel(InMemoryStrategy),
-    changeWorkingDirectory: () => {},
-    onDidChangeWorkDirs: () => {},
-    getCurrentWorkDirs: () => [],
     ...overrides,
   };
 }
@@ -58,9 +55,6 @@ export function gitHubTabViewProps(atomEnv, repository, overrides = {}) {
 
     handlePushBranch: () => {},
     handleRemoteSelect: () => {},
-    changeWorkingDirectory: () => {},
-    onDidChangeWorkDirs: () => {},
-    getCurrentWorkDirs: () => [],
 
     ...overrides,
   };

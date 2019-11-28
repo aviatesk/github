@@ -7,7 +7,6 @@ import Decoration from '../../lib/atom/decoration';
 import AtomTextEditor from '../../lib/atom/atom-text-editor';
 import Marker from '../../lib/atom/marker';
 import MarkerLayer from '../../lib/atom/marker-layer';
-import ErrorBoundary from '../../lib/error-boundary';
 
 describe('Decoration', function() {
   let atomEnv, workspace, editor, marker;
@@ -129,40 +128,15 @@ describe('Decoration', function() {
       assert.isNull(editor.gutterWithName(gutterName));
     });
 
-    describe('throws an error', function() {
-      let errors;
-
-      // This consumes the error rather than printing it to console.
-      const onError = function(e) {
-        if (e.message === 'Uncaught Error: You are trying to decorate a gutter but did not supply gutterName prop.') {
-          errors.push(e.error);
-          e.preventDefault();
-        }
-      };
-
-      beforeEach(function() {
-        errors = [];
-        window.addEventListener('error', onError);
-      });
-
-      afterEach(function() {
-        errors = [];
-        window.removeEventListener('error', onError);
-      });
-
-      it('if `gutterName` prop is not supplied for gutter decorations', function() {
-        const app = (
-          <ErrorBoundary>
-            <Decoration editor={editor} decorable={marker} type="gutter">
-              <div className="decoration-subtree">
-                This is a subtree
-              </div>
-            </Decoration>
-          </ErrorBoundary>
-        );
-        mount(app);
-        assert.strictEqual(errors[0].message, 'You are trying to decorate a gutter but did not supply gutterName prop.');
-      });
+    it('throws an error if `gutterName` prop is not supplied for gutter decorations', function() {
+      const app = (
+        <Decoration editor={editor} decorable={marker} type="gutter">
+          <div className="decoration-subtree">
+            This is a subtree
+          </div>
+        </Decoration>
+      );
+      assert.throws(() => mount(app), 'You are trying to decorate a gutter but did not supply gutterName prop.');
     });
   });
 
@@ -280,7 +254,7 @@ describe('Decoration', function() {
 
   it('decorates a parent Marker on a prop-provided TextEditor', function() {
     mount(
-      <Marker editor={editor} bufferRange={Range.fromObject([[0, 0], [1, 0]])}>
+      <Marker editor={editor} bufferRange={[[0, 0], [1, 0]]}>
         <Decoration editor={editor} type="line" className="something" />
       </Marker>,
     );
@@ -292,7 +266,7 @@ describe('Decoration', function() {
     let layerID = null;
     mount(
       <MarkerLayer editor={editor} handleID={id => { layerID = id; }}>
-        <Marker bufferRange={Range.fromObject([[0, 0], [1, 0]])} />
+        <Marker bufferRange={[[0, 0], [1, 0]]} />
         <Decoration editor={editor} type="line" className="something" />
       </MarkerLayer>,
     );

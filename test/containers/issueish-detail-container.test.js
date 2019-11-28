@@ -54,7 +54,6 @@ describe('IssueishDetailContainer', function() {
       switchToIssueish: () => {},
       onTitleChange: () => {},
       destroy: () => {},
-      reportRelayError: () => {},
 
       itemType: IssueishDetailItem,
       refEditor: new RefHolder(),

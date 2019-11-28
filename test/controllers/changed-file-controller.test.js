@@ -27,9 +27,6 @@ describe('ChangedFileController', function() {
       keymaps: atomEnv.keymaps,
       tooltips: atomEnv.tooltips,
       config: atomEnv.config,
-      multiFilePatch: {
-        getFilePatches: () => {},
-      },
 
       destroy: () => {},
       undoLastDiscard: () => {},

@@ -282,11 +282,4 @@ describe('GitTabView', function() {
     wrapper.instance().focusAndSelectRecentCommit();
     assert.isTrue(setFocus.calledWith(GitTabView.focus.RECENT_COMMIT));
   });
-
-  it('calls changeWorkingDirectory when a project is selected', async function() {
-    const changeWorkingDirectory = sinon.spy();
-    const wrapper = shallow(await buildApp({changeWorkingDirectory}));
-    wrapper.find('TabHeaderView').prop('handleWorkDirSelect')({target: {value: 'some-path'}});
-    assert.isTrue(changeWorkingDirectory.calledWith('some-path'));
-  });
 });
